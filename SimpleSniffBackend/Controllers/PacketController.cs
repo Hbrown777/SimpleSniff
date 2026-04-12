@@ -13,6 +13,7 @@ namespace SimpleSniffBackend.Controllers
     public class PacketController : ControllerBase
     {
         [HttpPost("analyze")]
+        [Consumes("multipart/form-data")]
         public async Task<IActionResult> Analyze([FromForm] IFormFile file, [FromForm] string filtersJson)
         {
             if (file == null || file.Length == 0)

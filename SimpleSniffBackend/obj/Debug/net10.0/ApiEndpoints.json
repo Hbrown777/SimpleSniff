@@ -1,0 +1,34 @@
+[
+  {
+    "ContainingType": "SimpleSniffBackend.Controllers.PacketController",
+    "Method": "filterPackets",
+    "RelativePath": "api/Packet/filter",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "filters",
+        "Type": "SimpleSniffBackend.Models.Filter",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SimpleSniffBackend.Controllers.PacketController",
+    "Method": "fileUpload",
+    "RelativePath": "api/Packet/upload",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "file",
+        "Type": "Microsoft.AspNetCore.Http.IFormFile",
+        "IsRequired": false
+      }
+    ],
+    "ReturnTypes": []
+  }
+]

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\hbrow\\source\\repos\\SimpleSniffBackend\\SimpleSniffBackend\\SimpleSniffBackend.csproj": {}
+    "C:\\Users\\hbrow\\Downloads\\SimpleSniff\\SimpleSniffBackend\\SimpleSniffBackend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\hbrow\\source\\repos\\SimpleSniffBackend\\SimpleSniffBackend\\SimpleSniffBackend.csproj": {
+    "C:\\Users\\hbrow\\Downloads\\SimpleSniff\\SimpleSniffBackend\\SimpleSniffBackend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\hbrow\\source\\repos\\SimpleSniffBackend\\SimpleSniffBackend\\SimpleSniffBackend.csproj",
+        "projectUniqueName": "C:\\Users\\hbrow\\Downloads\\SimpleSniff\\SimpleSniffBackend\\SimpleSniffBackend.csproj",
         "projectName": "SimpleSniffBackend",
-        "projectPath": "C:\\Users\\hbrow\\source\\repos\\SimpleSniffBackend\\SimpleSniffBackend\\SimpleSniffBackend.csproj",
+        "projectPath": "C:\\Users\\hbrow\\Downloads\\SimpleSniff\\SimpleSniffBackend\\SimpleSniffBackend.csproj",
         "packagesPath": "C:\\Users\\hbrow\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\hbrow\\source\\repos\\SimpleSniffBackend\\SimpleSniffBackend\\obj\\",
+        "outputPath": "C:\\Users\\hbrow\\Downloads\\SimpleSniff\\SimpleSniffBackend\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

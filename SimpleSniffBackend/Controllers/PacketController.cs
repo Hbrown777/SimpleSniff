@@ -30,22 +30,28 @@ namespace SimpleSniffBackend.Controllers
                 await file.CopyToAsync(stream);
             }
 
-            var parser = new PcapParser();
-            IEnumerable<Models.Packet> packets = parser.Parse(tempPath);
+            try
+            {
+                var parser = new PcapParser();
+                IEnumerable<Models.Packet> packets = parser.Parse(tempPath);
 
-            if (!string.IsNullOrEmpty(filters?.Protocol) && filters.Protocol != "all")
-                packets = packets.Where(p => p.Protocol == filters.Protocol).ToList();
+                if (!string.IsNullOrEmpty(filters?.Protocol) && filters.Protocol != "all")
+                    packets = packets.Where(p => p.Protocol == filters.Protocol).ToList();
 
-            if (!string.IsNullOrEmpty(filters?.SourceIp))
-                packets = packets.Where(p => p.Source == filters.SourceIp).ToList();
+                if (!string.IsNullOrEmpty(filters?.SourceIp))
+                    packets = packets.Where(p => p.Source == filters.SourceIp).ToList();
 
-            if (!string.IsNullOrEmpty(filters?.DestIp))
-                packets = packets.Where(p => p.Destination == filters.DestIp).ToList();
+                if (!string.IsNullOrEmpty(filters?.DestIp))
+                    packets = packets.Where(p => p.Destination == filters.DestIp).ToList();
 
-            // Clean up temp file
-            System.IO.File.Delete(tempPath);
+                System.IO.File.Delete(tempPath);
 
-            return Ok(new { packets });
+                return Ok(new { packets });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error processing file: {ex.Message}");
+            }
         }
     }
 }

@@ -20,15 +20,15 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseHttpsRedirection();
+
 // Middleware
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseRouting();
-
 app.UseCors("AllowAll");
 
-app.UseHttpsRedirection();
+app.UseRouting();
 
 app.UseAuthorization();
 

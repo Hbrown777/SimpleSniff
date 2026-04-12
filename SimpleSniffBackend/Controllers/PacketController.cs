@@ -18,10 +18,22 @@ namespace SimpleSniffBackend.Controllers
             if (file == null || file.Length == 0)
                 return BadRequest("No file uploaded");
 
-            var filters = JsonSerializer.Deserialize<Filter>(filtersJson, new JsonSerializerOptions
+            Filter filters = new();
+
+            if (!string.IsNullOrEmpty(filtersJson))
             {
-                PropertyNameCaseInsensitive = true
-            });
+                try
+                {
+                    filters = JsonSerializer.Deserialize<Filter>(filtersJson, new JsonSerializerOptions
+                    {
+                        PropertyNameCaseInsensitive = true
+                    }) ?? new Filter();
+                }
+                catch
+                {
+                    filters = new Filter(); // fallback so app doesn’t crash
+                }
+            }
 
             // Write to temp file so SharpPcap can read it
             var tempPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());

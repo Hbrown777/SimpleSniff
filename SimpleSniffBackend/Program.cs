@@ -22,7 +22,7 @@ var app = builder.Build();
 app.UseSwagger();
 app.UseSwaggerUI();
 app.UseCors("AllowAll");
-app.UseRouting();
+//app.UseRouting();
 // app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();

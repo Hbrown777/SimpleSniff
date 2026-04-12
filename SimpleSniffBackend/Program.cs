@@ -1,29 +1,15 @@
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services
 builder.Services.AddControllers();
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll",
-        policy =>
-        {
-            policy
-                .AllowAnyOrigin()
-                .AllowAnyHeader()
-                .AllowAnyMethod();
-        });
-});
+builder.Services.AddCors();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Middleware
 app.UseSwagger();
 app.UseSwaggerUI();
-app.UseCors("AllowAll");
-//app.UseRouting();
-// app.UseHttpsRedirection();
+app.UseCors(x => x.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 app.UseAuthorization();
 app.MapControllers();
 

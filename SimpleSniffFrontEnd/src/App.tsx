@@ -31,7 +31,7 @@ function App() {
         formData.append("file", file);
 
         // 👇 Send to backend
-        const res = await fetch("http://localhost:5153/api/Packet/upload", {
+        const res = await fetch("https://simplesniff.onrender.com/api/Packet/upload", {
           method: "POST",
           body: formData,
         });
@@ -61,7 +61,7 @@ function App() {
 
   const handleAnalyze = async (filters: FilterOptions) => {
     try {
-      const res = await fetch("http://localhost:5153/api/Packet/filter", {
+      const res = await fetch("https://simplesniff.onrender.com/api/Packet/filter", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

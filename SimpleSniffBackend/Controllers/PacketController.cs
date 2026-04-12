@@ -14,8 +14,11 @@ namespace SimpleSniffBackend.Controllers
     {
         [HttpPost("analyze")]
         [Consumes("multipart/form-data")]
-        public async Task<IActionResult> Analyze([FromForm] IFormFile file, [FromForm] string filtersJson)
+        public async Task<IActionResult> Analyze([FromForm] AnalyzeRequest request)
         {
+            var file = request.File;
+            var filtersJson = request.FiltersJson;
+
             if (file == null || file.Length == 0)
                 return BadRequest("No file uploaded");
 

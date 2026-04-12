@@ -20,67 +20,42 @@ function App() {
     null
   );
 
-  const handleFileSelect = async (file: File) => {
-    const fileName = file.name;
-    const fileExtension = fileName.split(".").pop()?.toLowerCase();
+const [uploadedFile, setUploadedFile] = React.useState<File | null>(null);
 
-    if (fileExtension == "pcap" || fileExtension == "pcapng") {
-      try {
-        // 👇 Create form data
-        const formData = new FormData();
-        formData.append("file", file);
-
-        // 👇 Send to backend
-        const res = await fetch("https://simplesniff.onrender.com/api/Packet/upload", {
-          method: "POST",
-          body: formData,
-        });
-
-        if (!res.ok) throw new Error("Upload failed");
-
-        const data = await res.json();
-
-        console.log("Upload success:", data);
-
-        setUploadedFileName(fileName);
+const handleFileSelect = async (file: File) => {
+    const fileExtension = file.name.split(".").pop()?.toLowerCase();
+    if (fileExtension === "pcap" || fileExtension === "pcapng") {
+        setUploadedFile(file);           // ← just store it, no fetch
+        setUploadedFileName(file.name);
         setCurrentScreen("filter");
-      } 
-      catch (err) {
-        console.error(err);
+    } else {
         setCurrentScreen("error");
-      }
-    } 
-    else {
-      setCurrentScreen("error");
     }
-  };
+};
 
   const handleTryAgain = () => {
     setCurrentScreen("home");
   };
 
-  const handleAnalyze = async (filters: FilterOptions) => {
+const handleAnalyze = async (filters: FilterOptions) => {
+    if (!uploadedFile) return;
     try {
-      const res = await fetch("https://simplesniff.onrender.com/api/Packet/filter", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(filters),
-      });
+        const formData = new FormData();
+        formData.append("file", uploadedFile);
+        formData.append("filtersJson", JSON.stringify(filters));
 
-      const data = await res.json();
-
-      // assuming backend returns { packets: [...] }
-      setPackets(data.packets);
-
-      setCurrentScreen("results");
-    } 
-    catch (error) {
-      console.error("API error:", error);
-      setCurrentScreen("error");
+        const res = await fetch("https://simplesniff.onrender.com/api/Packet/analyze", {
+            method: "POST",
+            body: formData,   // ← no Content-Type header, let browser set it
+        });
+        const data = await res.json();
+        setPackets(data.packets);
+        setCurrentScreen("results");
+    } catch (error) {
+        console.error("API error:", error);
+        setCurrentScreen("error");
     }
-  };
+};
 
   const handlePacketSelect = (packet: Packet) => {
     setSelectedPacket(packet);

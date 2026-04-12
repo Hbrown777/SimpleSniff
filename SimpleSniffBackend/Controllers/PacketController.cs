@@ -24,7 +24,7 @@ namespace SimpleSniffBackend.Controllers
             });
 
             // Write to temp file so SharpPcap can read it
-            var tempPath = Path.Combine(Path.GetTempPath(), file.FileName);
+            var tempPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
             using (var stream = new FileStream(tempPath, FileMode.Create))
             {
                 await file.CopyToAsync(stream);

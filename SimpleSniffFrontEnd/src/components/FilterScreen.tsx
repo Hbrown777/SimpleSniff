@@ -128,12 +128,12 @@ export function FilterScreen({
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Time</SelectItem>
-                  <SelectItem value="first-minute">First Minute</SelectItem>
-                  <SelectItem value="first-5-minutes">
-                    First 5 Minutes
+                  <SelectItem value="10">First 10 seconds</SelectItem>
+                  <SelectItem value="30">
+                    First 30 Seconds
                   </SelectItem>
-                  <SelectItem value="first-10-minutes">
-                    First 10 Minutes
+                  <SelectItem value="60">
+                    First Minute
                   </SelectItem>
                   <SelectItem value="custom">Custom</SelectItem>
                 </SelectContent>

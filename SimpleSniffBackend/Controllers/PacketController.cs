@@ -94,7 +94,7 @@ namespace SimpleSniffBackend.Controllers
 
                 if (!string.IsNullOrEmpty(filters?.TimeRange) && filters.TimeRange != "all")
                 {
-                    packets = packets.Where(p => p.Time - startingTime < int.Parse(filters.TimeRange)).ToList();
+                    packets = packets.Where(p => int.Parse(p.Time) - startingTime < int.Parse(filters.TimeRange)).ToList();
                 }
 
                 System.IO.File.Delete(tempPath);

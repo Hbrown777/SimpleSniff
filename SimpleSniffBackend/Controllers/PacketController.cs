@@ -51,8 +51,8 @@ namespace SimpleSniffBackend.Controllers
                 var parser = new PcapParser();
                 IEnumerable<Models.Packet> packets = parser.Parse(tempPath);
 
-                int startingTime = packets.Min(p => int.Parse(p.Time));
-                int packetTime;
+                //int startingTime = packets.Min(p => int.Parse(p.Time));
+                //int packetTime;
 
                 if (!string.IsNullOrEmpty(filters?.Protocol) && filters.Protocol != "all")
                 {

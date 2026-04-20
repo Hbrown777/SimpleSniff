@@ -77,14 +77,14 @@ export function FilterScreen({
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Protocols</SelectItem>
-                  <SelectItem value="tcp">TCP</SelectItem>
-                  <SelectItem value="udp">UDP</SelectItem>
-                  <SelectItem value="icmp">ICMP</SelectItem>
-                  <SelectItem value="http">HTTP</SelectItem>
-                  <SelectItem value="https">HTTPS</SelectItem>
-                  <SelectItem value="dns">DNS</SelectItem>
-                  <SelectItem value="ssh">SSH</SelectItem>
-                  <SelectItem value="ftp">FTP</SelectItem>
+                  <SelectItem value="Tcp">TCP</SelectItem>
+                  <SelectItem value="Udp">UDP</SelectItem>
+                  <SelectItem value="Icmp">ICMP</SelectItem>
+                  <SelectItem value="Http">HTTP</SelectItem>
+                  <SelectItem value="Https">HTTPS</SelectItem>
+                  <SelectItem value="Dns">DNS</SelectItem>
+                  <SelectItem value="Ssh">SSH</SelectItem>
+                  <SelectItem value="Ftp">FTP</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -105,6 +105,7 @@ export function FilterScreen({
               </Label>
               <Input
                 value={destIp}
+                defaultValue={"example: 192.168.100.1"}
                 onChange={(e) => setDestIp(e.target.value)}
               />
             </div>
@@ -113,6 +114,7 @@ export function FilterScreen({
               <Label className="text-base mb-2 block">Port</Label>
               <Input
                 value={port}
+                defaultValue={"example: 192.168.100.1"}
                 onChange={(e) => setPort(e.target.value)}
               />
             </div>

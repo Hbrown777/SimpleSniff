@@ -95,6 +95,7 @@ export function FilterScreen({
               </Label>
               <Input
                 value={sourceIp}
+                placeholder="e.g., 192.168.1.100"
                 onChange={(e) => setSourceIp(e.target.value)}
               />
             </div>
@@ -105,7 +106,7 @@ export function FilterScreen({
               </Label>
               <Input
                 value={destIp}
-                defaultValue={"example: 192.168.100.1"}
+                placeholder="e.g., 192.168.1.1"
                 onChange={(e) => setDestIp(e.target.value)}
               />
             </div>
@@ -114,7 +115,7 @@ export function FilterScreen({
               <Label className="text-base mb-2 block">Port</Label>
               <Input
                 value={port}
-                defaultValue={"example: 192.168.100.1"}
+                placeholder="e.g., 80, 443, 22"
                 onChange={(e) => setPort(e.target.value)}
               />
             </div>

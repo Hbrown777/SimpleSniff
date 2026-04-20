@@ -135,7 +135,6 @@ export function FilterScreen({
                   <SelectItem value="60">
                     First Minute
                   </SelectItem>
-                  <SelectItem value="custom">Custom</SelectItem>
                 </SelectContent>
               </Select>
             </div>

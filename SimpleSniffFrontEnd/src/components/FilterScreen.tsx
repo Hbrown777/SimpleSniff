@@ -8,6 +8,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { Input } from "./ui/input";
+import * as React from "react";
 
 interface FilterScreenProps {
   fileName: string;
@@ -34,8 +35,18 @@ export function FilterScreen({
   const [port, setPort] = React.useState("");
   const [timeRange, setTimeRange] = React.useState("all");
 
-  const handleAnalyze = () => {
+  // NEW: loading state
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const handleAnalyze = async () => {
+    setIsLoading(true);
+
+    // simulate loading (remove later if backend call exists)
+    await new Promise((resolve) => setTimeout(resolve, 1200));
+
     onAnalyze({ protocol, sourceIp, destIp, port, timeRange });
+
+    setIsLoading(false);
   };
 
   return (
@@ -50,81 +61,62 @@ export function FilterScreen({
           <p className="text-sm text-slate-500 mt-2">File: {fileName}</p>
         </div>
 
-        {/* Filter Options */}
+        {/* Filters */}
         <div className="bg-white rounded-lg border border-slate-200 p-8 mb-6">
           <div className="space-y-6">
-            {/* Protocol Filter */}
+
             <div>
-              <Label htmlFor="protocol" className="text-base mb-2 block">
-                Protocol
-              </Label>
+              <Label className="text-base mb-2 block">Protocol</Label>
               <Select value={protocol} onValueChange={setProtocol}>
-                <SelectTrigger id="protocol" className="w-full">
+                <SelectTrigger className="w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Protocols</SelectItem>
-                  <SelectItem value="Tcp">TCP</SelectItem>
-                  <SelectItem value="Udp">UDP</SelectItem>
-                  <SelectItem value="Icmp">ICMP</SelectItem>
-                  <SelectItem value="Http">HTTP</SelectItem>
-                  <SelectItem value="Https">HTTPS</SelectItem>
-                  <SelectItem value="Dns">DNS</SelectItem>
-                  <SelectItem value="Ssh">SSH</SelectItem>
-                  <SelectItem value="Ftp">FTP</SelectItem>
+                  <SelectItem value="tcp">TCP</SelectItem>
+                  <SelectItem value="udp">UDP</SelectItem>
+                  <SelectItem value="icmp">ICMP</SelectItem>
+                  <SelectItem value="http">HTTP</SelectItem>
+                  <SelectItem value="https">HTTPS</SelectItem>
+                  <SelectItem value="dns">DNS</SelectItem>
+                  <SelectItem value="ssh">SSH</SelectItem>
+                  <SelectItem value="ftp">FTP</SelectItem>
                 </SelectContent>
               </Select>
             </div>
 
-            {/* Source IP */}
             <div>
-              <Label htmlFor="source-ip" className="text-base mb-2 block">
-                Source IP Address (optional)
+              <Label className="text-base mb-2 block">
+                Source IP Address
               </Label>
               <Input
-                id="source-ip"
-                type="text"
-                placeholder="e.g., 192.168.1.1"
                 value={sourceIp}
                 onChange={(e) => setSourceIp(e.target.value)}
               />
             </div>
 
-            {/* Destination IP */}
             <div>
-              <Label htmlFor="dest-ip" className="text-base mb-2 block">
-                Destination IP Address (optional)
+              <Label className="text-base mb-2 block">
+                Destination IP Address
               </Label>
               <Input
-                id="dest-ip"
-                type="text"
-                placeholder="e.g., 192.168.1.100"
                 value={destIp}
                 onChange={(e) => setDestIp(e.target.value)}
               />
             </div>
 
-            {/* Port Number */}
             <div>
-              <Label htmlFor="port" className="text-base mb-2 block">
-                Port Number (optional)
-              </Label>
+              <Label className="text-base mb-2 block">Port</Label>
               <Input
-                id="port"
-                type="text"
-                placeholder="e.g., 80, 443, 22"
                 value={port}
                 onChange={(e) => setPort(e.target.value)}
               />
             </div>
 
-            {/* Time Range */}
             <div>
-              <Label htmlFor="time-range" className="text-base mb-2 block">
-                Time Range
-              </Label>
+              <Label className="text-base mb-2 block">Time Range</Label>
               <Select value={timeRange} onValueChange={setTimeRange}>
-                <SelectTrigger id="time-range" className="w-full">
+                <SelectTrigger className="w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -136,18 +128,32 @@ export function FilterScreen({
                   <SelectItem value="first-10-minutes">
                     First 10 Minutes
                   </SelectItem>
-                  <SelectItem value="custom">Custom Range</SelectItem>
+                  <SelectItem value="custom">Custom</SelectItem>
                 </SelectContent>
               </Select>
             </div>
+
           </div>
         </div>
 
-        {/* Action Buttons */}
+        {/* Buttons */}
         <div className="flex gap-3">
-          <Button size="lg" onClick={handleAnalyze} className="flex-1">
-            Analyze Traffic
+          <Button
+            size="lg"
+            onClick={handleAnalyze}
+            disabled={isLoading}
+            className="flex-1 flex items-center justify-center gap-2"
+          >
+            {isLoading ? (
+              <>
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                Analyzing...
+              </>
+            ) : (
+              "Analyze Traffic"
+            )}
           </Button>
+
           <Button
             size="lg"
             variant="outline"
@@ -161,6 +167,3 @@ export function FilterScreen({
     </div>
   );
 }
-
-// Add React import at the top
-import * as React from "react";

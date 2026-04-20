@@ -8,6 +8,7 @@ import {
   SelectValue,
 } from "./ui/select";
 import { Input } from "./ui/input";
+import * as React from "react";
 
 interface FilterScreenProps {
   fileName: string;
@@ -34,8 +35,22 @@ export function FilterScreen({
   const [port, setPort] = React.useState("");
   const [timeRange, setTimeRange] = React.useState("all");
 
-  const handleAnalyze = () => {
-    onAnalyze({ protocol, sourceIp, destIp, port, timeRange });
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const handleAnalyze = async () => {
+    setIsLoading(true);
+
+    try {
+      await onAnalyze({
+        protocol,
+        sourceIp,
+        destIp,
+        port,
+        timeRange,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -50,16 +65,14 @@ export function FilterScreen({
           <p className="text-sm text-slate-500 mt-2">File: {fileName}</p>
         </div>
 
-        {/* Filter Options */}
+        {/* Filters */}
         <div className="bg-white rounded-lg border border-slate-200 p-8 mb-6">
           <div className="space-y-6">
-            {/* Protocol Filter */}
+
             <div>
-              <Label htmlFor="protocol" className="text-base mb-2 block">
-                Protocol
-              </Label>
+              <Label className="text-base mb-2 block">Protocol</Label>
               <Select value={protocol} onValueChange={setProtocol}>
-                <SelectTrigger id="protocol" className="w-full">
+                <SelectTrigger className="w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -76,78 +89,78 @@ export function FilterScreen({
               </Select>
             </div>
 
-            {/* Source IP */}
             <div>
-              <Label htmlFor="source-ip" className="text-base mb-2 block">
-                Source IP Address (optional)
+              <Label className="text-base mb-2 block">
+                Source IP Address
               </Label>
               <Input
-                id="source-ip"
-                type="text"
-                placeholder="e.g., 192.168.1.1"
                 value={sourceIp}
+                placeholder="e.g., 192.168.1.100"
                 onChange={(e) => setSourceIp(e.target.value)}
               />
             </div>
 
-            {/* Destination IP */}
             <div>
-              <Label htmlFor="dest-ip" className="text-base mb-2 block">
-                Destination IP Address (optional)
+              <Label className="text-base mb-2 block">
+                Destination IP Address
               </Label>
               <Input
-                id="dest-ip"
-                type="text"
-                placeholder="e.g., 192.168.1.100"
                 value={destIp}
+                placeholder="e.g., 192.168.1.1"
                 onChange={(e) => setDestIp(e.target.value)}
               />
             </div>
 
-            {/* Port Number */}
             <div>
-              <Label htmlFor="port" className="text-base mb-2 block">
-                Port Number (optional)
-              </Label>
+              <Label className="text-base mb-2 block">Port</Label>
               <Input
-                id="port"
-                type="text"
-                placeholder="e.g., 80, 443, 22"
                 value={port}
+                placeholder="e.g., 80, 443, 22"
                 onChange={(e) => setPort(e.target.value)}
               />
             </div>
 
-            {/* Time Range */}
             <div>
-              <Label htmlFor="time-range" className="text-base mb-2 block">
-                Time Range
-              </Label>
+              <Label className="text-base mb-2 block">Time Range</Label>
               <Select value={timeRange} onValueChange={setTimeRange}>
-                <SelectTrigger id="time-range" className="w-full">
+                <SelectTrigger className="w-full">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">All Time</SelectItem>
-                  <SelectItem value="first-minute">First Minute</SelectItem>
-                  <SelectItem value="first-5-minutes">
-                    First 5 Minutes
+                  <SelectItem value="10">First 10 seconds</SelectItem>
+                  <SelectItem value="30">
+                    First 30 Seconds
                   </SelectItem>
-                  <SelectItem value="first-10-minutes">
-                    First 10 Minutes
+                  <SelectItem value="60">
+                    First Minute
                   </SelectItem>
-                  <SelectItem value="custom">Custom Range</SelectItem>
+                  <SelectItem value="custom">Custom</SelectItem>
                 </SelectContent>
               </Select>
             </div>
+
           </div>
         </div>
 
-        {/* Action Buttons */}
+        {/* Buttons */}
         <div className="flex gap-3">
-          <Button size="lg" onClick={handleAnalyze} className="flex-1">
-            Analyze Traffic
+          <Button
+            size="lg"
+            onClick={handleAnalyze}
+            disabled={isLoading}
+            className="flex-1 flex items-center justify-center gap-2"
+          >
+            {isLoading ? (
+              <>
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                Analyzing...
+              </>
+            ) : (
+              "Analyze Traffic"
+            )}
           </Button>
+
           <Button
             size="lg"
             variant="outline"
@@ -161,6 +174,3 @@ export function FilterScreen({
     </div>
   );
 }
-
-// Add React import at the top
-import * as React from "react";

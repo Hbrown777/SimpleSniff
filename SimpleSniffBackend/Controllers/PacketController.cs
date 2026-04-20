@@ -51,6 +51,9 @@ namespace SimpleSniffBackend.Controllers
                 var parser = new PcapParser();
                 IEnumerable<Models.Packet> packets = parser.Parse(tempPath);
 
+                int startingTime = packets.Min(p => p.Time);
+                int packetTime;
+
                 if (!string.IsNullOrEmpty(filters?.Protocol) && filters.Protocol != "all")
                 {
                     if (filters.Protocol == "Icmp")
@@ -88,6 +91,11 @@ namespace SimpleSniffBackend.Controllers
 
                 if (!string.IsNullOrEmpty(filters?.DestIp))
                     packets = packets.Where(p => p.Destination == filters.DestIp).ToList();
+
+                if (!string.IsNullOrEmpty(filters?.TimeRange) && filters.TimeRange != "all")
+                {
+                    packets = packets.Where(p => p.Time - startingTime < int.Parse(filters.TimeRange)).ToList();
+                }
 
                 System.IO.File.Delete(tempPath);
 

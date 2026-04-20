@@ -52,7 +52,36 @@ namespace SimpleSniffBackend.Controllers
                 IEnumerable<Models.Packet> packets = parser.Parse(tempPath);
 
                 if (!string.IsNullOrEmpty(filters?.Protocol) && filters.Protocol != "all")
-                    packets = packets.Where(p => p.Protocol == filters.Protocol).ToList();
+                {
+                    if (filters.Protocol == "Icmp")
+                    {
+                        packets = packets.Where(p => p.Details.Transport.SrcPort == 8 || p.Details.Transport.DstPort == 8).ToList();
+                    }
+                    else if (filters.Protocol == "Http")
+                    {
+                        packets = packets.Where(p => p.Details.Transport.SrcPort == 80 || p.Details.Transport.DstPort == 80).ToList();
+                    }
+                    else if (filters.Protocol == "Https")
+                    {
+                        packets = packets.Where(p => p.Details.Transport.SrcPort == 443 || p.Details.Transport.DstPort == 443).ToList();
+                    }
+                    else if (filters.Protocol == "Dns")
+                    {
+                        packets = packets.Where(p => p.Details.Transport.SrcPort == 53 || p.Details.Transport.DstPort == 53).ToList();
+                    }
+                    else if (filters.Protocol == "Ssh")
+                    {
+                        packets = packets.Where(p => p.Details.Transport.SrcPort == 22 || p.Details.Transport.DstPort == 22).ToList();
+                    }
+                    else if (filters.Protocol == "Ftp")
+                    {
+                        packets = packets.Where(p => p.Details.Transport.SrcPort == 20 || p.Details.Transport.DstPort == 20 || p.Details.Transport.SrcPort == 21 || p.Details.Transport.DstPort == 21).ToList();
+                    }
+                    else
+                    {
+                        packets = packets.Where(p => p.Protocol == filters.Protocol).ToList();
+                    }
+                }
 
                 if (!string.IsNullOrEmpty(filters?.SourceIp))
                     packets = packets.Where(p => p.Source == filters.SourceIp).ToList();

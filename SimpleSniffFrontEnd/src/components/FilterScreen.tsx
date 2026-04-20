@@ -34,8 +34,22 @@ export function FilterScreen({
   const [port, setPort] = React.useState("");
   const [timeRange, setTimeRange] = React.useState("all");
 
-  const handleAnalyze = () => {
-    onAnalyze({ protocol, sourceIp, destIp, port, timeRange });
+  const [isLoading, setIsLoading] = React.useState(false);
+
+  const handleAnalyze = async () => {
+    setIsLoading(true);
+
+    try {
+      await onAnalyze({
+        protocol,
+        sourceIp,
+        destIp,
+        port,
+        timeRange,
+      });
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -145,8 +159,20 @@ export function FilterScreen({
 
         {/* Action Buttons */}
         <div className="flex gap-3">
-          <Button size="lg" onClick={handleAnalyze} className="flex-1">
-            Analyze Traffic
+          <Button
+            size="lg"
+            onClick={handleAnalyze}
+            disabled={isLoading}
+            className="flex-1 flex items-center justify-center gap-2"
+          >
+            {isLoading ? (
+              <>
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                Analyzing...
+              </>
+            ) : (
+              "Analyze Traffic"
+            )}
           </Button>
           <Button
             size="lg"

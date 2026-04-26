@@ -79,49 +79,6 @@ namespace SimpleSniffBackend.Controllers.Services
                     }
                 }
 
-                if (arpPacket != null)
-                {
-                    string summary = arpPacket.Operation switch
-                    {
-                        ArpOperation.Request => "ARP Request",
-                        ArpOperation.Response => "ARP Reply",
-                        _ => "ARP Packet"
-                    };
-
-                    packets.Add(new Models.Packet
-                    {
-                        Id = id,
-                        Time = raw.Timeval.Date.ToString("HH:mm:ss.fff"),
-                        Source = arpPacket.SenderProtocolAddress.ToString(),
-                        Destination = arpPacket.TargetProtocolAddress.ToString(),
-                        Protocol = "ARP",
-                        Length = raw.Data.Length,
-                        Summary = summary,
-                        Details = new PacketDetails
-                        {
-                            Payload = BitConverter.ToString(raw.Data).Replace("-", " "),
-                            Ethernet = new EthernetDetails
-                            {
-                                srcMac = arpPacket.SenderHardwareAddress.ToString(),
-                                dstMac = arpPacket.TargetHardwareAddress.ToString(),
-                                type = "ARP"
-                            },
-                            IP = new IPDetails
-                            {
-                                version = "ARP",
-                                srcIp = arpPacket.SenderProtocolAddress.ToString(),
-                                dstIp = arpPacket.TargetProtocolAddress.ToString(),
-                                ttl = 0,
-                                protocol = "ARP"
-                            },
-
-                            Transport = null
-                        }
-                    });
-
-                    id++;
-                }
-
                 device.Close();
             }
 

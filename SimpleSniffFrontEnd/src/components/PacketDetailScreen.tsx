@@ -215,7 +215,7 @@ export function PacketDetailScreen({ packet, onBack }: PacketDetailScreenProps) 
               onClick={() => toggleSection("payload")}
               className="w-full px-6 py-4 flex items-center justify-between bg-slate-50 hover:bg-slate-100 transition-colors"
             >
-              <span className="text-lg text-slate-800">Payload</span>
+              <span className="text-lg text-slate-800">Raw Data</span>
               {expandedSections.payload ? (
                 <ChevronDown className="w-5 h-5 text-slate-600" />
               ) : (

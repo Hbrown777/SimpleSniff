@@ -33,24 +33,24 @@ namespace SimpleSniffBackend.Controllers.Services
 
                     if (ethernetPacket != null)
                     {
-                        string srcMac = ethernetPacket.SourceHardwareAddress.ToString();
-                        string dstMac = ethernetPacket.DestinationHardwareAddress.ToString();
+                        string srcMac = ethernetPacket.Source.ToString();
+                        string dstMac = ethernetPacket.Destination.ToString();
                         string type = ethernetPacket.Type.ToString();
+                    }
+                    string payload = null;
+                    if (raw.HasPayloadData)
+                    {
+                        try
+                        {
+                            payload = System.Text.Encoding.UTF8.GetString(raw.PayloadData);
+                        }
+                        catch
+                        {
+                            payload = BitConverter.ToString(raw.PayloadData);
+                        }
                     }
                     if (ipPacket != null)
                     {
-                        string payload = null;
-                        if (ipPacket.HasPayloadData)
-                        {
-                            try
-                            {
-                                payload = System.Text.Encoding.UTF8.GetString(ipPacket.PayloadData);
-                            }
-                            catch
-                            {
-                                payload = BitConverter.ToString(ipPacket.PayloadData);
-                            }
-                        }
 
                         packets.Add(new Models.Packet
                         {

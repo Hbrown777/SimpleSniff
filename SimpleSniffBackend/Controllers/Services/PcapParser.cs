@@ -59,7 +59,7 @@ namespace SimpleSniffBackend.Controllers.Services
                         {
                             srcMac = "N/A";
                             dstMac = "N/A";
-                            type = "Non-Ethernet " + raw.LinkLayerType.ToString();
+                            type = "NA"//"Non-Ethernet " + raw.LinkLayerType.ToString();
                         }
                         packets.Add(new Models.Packet
                         {

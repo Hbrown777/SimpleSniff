@@ -36,14 +36,14 @@ namespace SimpleSniffBackend.Controllers.Services
                         string payload = null;
                         if (ipPacket.HasPayloadData)
                         {
-                            try
-                            {
+                            //try
+                            //{
                                 payload = System.Text.Encoding.UTF8.GetString(ipPacket.PayloadData);
-                            }
-                            catch
-                            {
-                                payload = BitConverter.ToString(ipPacket.PayloadData);
-                            }
+                            //}
+                            //catch
+                            //{
+                                //payload = BitConverter.ToString(ipPacket.PayloadData);
+                            //}
                         }
                         string srcMac = "";
                         string dstMac = "";

@@ -79,7 +79,6 @@ export function FilterScreen({
                   <SelectItem value="all">All Protocols</SelectItem>
                   <SelectItem value="Tcp">TCP</SelectItem>
                   <SelectItem value="Udp">UDP</SelectItem>
-                  <SelectItem value="Icmp">ICMP</SelectItem>
                   <SelectItem value="Http">HTTP</SelectItem>
                   <SelectItem value="Https">HTTPS</SelectItem>
                   <SelectItem value="Dns">DNS</SelectItem>
@@ -119,25 +118,26 @@ export function FilterScreen({
                 onChange={(e) => setPort(e.target.value)}
               />
             </div>
-
-            <div>
-              <Label className="text-base mb-2 block">Time Range</Label>
-              <Select value={timeRange} onValueChange={setTimeRange}>
-                <SelectTrigger className="w-full">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="all">All Time</SelectItem>
-                  <SelectItem value="10">First 10 seconds</SelectItem>
-                  <SelectItem value="30">
-                    First 30 Seconds
-                  </SelectItem>
-                  <SelectItem value="60">
-                    First Minute
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+            {/*
+              <div>
+                <Label className="text-base mb-2 block">Time Range</Label>
+                <Select value={timeRange} onValueChange={setTimeRange}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="all">All Time</SelectItem>
+                    <SelectItem value="10">First 10 seconds</SelectItem>
+                    <SelectItem value="30">
+                      First 30 Seconds
+                    </SelectItem>
+                    <SelectItem value="60">
+                      First Minute
+                    </SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            */}
 
           </div>
         </div>

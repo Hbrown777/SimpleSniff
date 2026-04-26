@@ -30,7 +30,6 @@ namespace SimpleSniffBackend.Controllers.Services
                     var tcpPacket = packet.Extract<TcpPacket>();
                     var udpPacket = packet.Extract<UdpPacket>();
                     var arpPacket = packet.Extract<ArpPacket>();
-                    var icmpPacket = packet.Extract<IcmpPacket>();
 
                     string srcMac = "", dstMac = "", type = "";
 

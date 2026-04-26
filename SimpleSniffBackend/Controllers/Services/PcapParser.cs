@@ -69,9 +69,9 @@ namespace SimpleSniffBackend.Controllers.Services
                                 Payload = payload,
                                 Ethernet = new EthernetDetails
                                 {
-                                    Source = srcMac,
-                                    Destination = dstMac,
-                                    Type = type
+                                    Source = ethernetPacket?.SourceHardwareAddress?.ToString() ?? "N/A",
+                                    Destination = ethernetPacket?.DestinationHardwareAddress?.ToString() ?? "N/A",
+                                    Type = ethernetPacket?.Type.ToString() ?? raw.LinkLayerType.ToString()
                                 },
                                 IP = new IPDetails
                                 {

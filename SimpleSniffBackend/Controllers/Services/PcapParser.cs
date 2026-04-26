@@ -35,8 +35,8 @@ namespace SimpleSniffBackend.Controllers.Services
 
                     if (ethernetPacket != null)
                     {
-                        srcMac = ethernetPacket.SourceAddress.ToString();
-                        dstMac = ethernetPacket.DestinationAddress.ToString();
+                        srcMac = ethernetPacket.SourceHardwareAddress.ToString();
+                        dstMac = ethernetPacket.DestinationHardwareAddress.ToString();
                         type = ethernetPacket.Type.ToString();
                     }
                     string payload = null;

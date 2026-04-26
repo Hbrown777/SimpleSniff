@@ -31,6 +31,12 @@ namespace SimpleSniffBackend.Controllers.Services
                     var udpPacket = packet.Extract<UdpPacket>();
                     var arpPacket = packet.Extract<ArpPacket>();
 
+                    if (ethernetPacket != null)
+                    {
+                        string srcMac = ethernetPacket.SourceHardwareAddress.ToString();
+                        string dstMac = ethernetPacket.DestinationHardwareAddress.ToString();
+                        string type = ethernetPacket.Type.ToString();
+                    }
                     if (ipPacket != null)
                     {
                         string payload = null;
@@ -45,22 +51,7 @@ namespace SimpleSniffBackend.Controllers.Services
                                 payload = BitConverter.ToString(ipPacket.PayloadData);
                             }
                         }
-                        string srcMac = "";
-                        string dstMac = "";
-                        string type = "";
 
-                        if (ethernetPacket != null)
-                        {
-                            srcMac = ethernetPacket.SourceHardwareAddress.ToString();
-                            dstMac = ethernetPacket.DestinationHardwareAddress.ToString();
-                            type = ethernetPacket.Type.ToString();
-                        }
-                        else
-                        {
-                            srcMac = "N/A";
-                            dstMac = "N/A";
-                            type = "Non-Ethernet " + raw.LinkLayerType.ToString();
-                        }
                         packets.Add(new Models.Packet
                         {
                             Id = id,
@@ -93,35 +84,7 @@ namespace SimpleSniffBackend.Controllers.Services
                         });
                         id++;
                     }
-                    if(ethernetPacket != null)
-                    {
-                        string srcMac = ethernetPacket.SourceHardwareAddress.ToString();
-                        string dstMac = ethernetPacket.DestinationHardwareAddress.ToString();
-                        string type = ethernetPacket.Type.ToString();
-                        packets.Add(new Models.Packet
-                        {
-                            Id = id,
-                            Time = raw.Timeval.Date.ToString("HH:mm:ss.fff"),
-                            Source = srcMac,
-                            Destination = dstMac,
-                            Protocol = "Ethernet",
-                            Length = raw.Data.Length,
-                            Summary = type,
-                            Details = new PacketDetails
-                            {
-                                Payload = null,
-                                Ethernet = new EthernetDetails
-                                {
-                                    Source = srcMac,
-                                    Destination = dstMac,
-                                    Type = type
-                                },
-                                IP = null,
-                                Transport = null
-                            }
-                        });
-                        id++;
-                    }
+
                     if (arpPacket != null)
                     {
                         string srcMac = ethernetPacket.SourceHardwareAddress.ToString();

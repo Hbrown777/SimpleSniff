@@ -51,7 +51,18 @@ namespace SimpleSniffBackend.Controllers.Services
                     }
                     if (ipPacket != null)
                     {
-
+                        if(srcMac == null)
+                        {
+                            srcMac = "N/A";
+                        }
+                        if(dstMac == null)
+                        {
+                            dstMac = "N/A";
+                        }
+                        if(type == null)
+                        {
+                            type = "N/A";
+                        }
                         packets.Add(new Models.Packet
                         {
                             Id = id,

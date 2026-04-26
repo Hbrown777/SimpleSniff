@@ -31,27 +31,30 @@ namespace SimpleSniffBackend.Controllers.Services
                     var udpPacket = packet.Extract<UdpPacket>();
                     var arpPacket = packet.Extract<ArpPacket>();
 
+                    string srcMac = "", dstMac = "", type = "";
+
+                    if (ethernetPacket != null)
+                    {
+                        srcMac = ethernetPacket.SourceHardwareAddress.ToString();
+                        dstMac = ethernetPacket.DestinationHardwareAddress.ToString();
+                        type = ethernetPacket.Type.ToString();
+                    }
+                    string payload = "";
+                    /*
+                    if (packet.PayloadPacket != null)
+                    {
+                        try
+                        {
+                            payload = System.Text.Encoding.UTF8.GetString(packet.PayloadData);
+                        }
+                        catch
+                        {
+                            payload = BitConverter.ToString(packet.PayloadData);
+                        }
+                    }
+                    */
                     if (ipPacket != null)
                     {
-                        string payload = null;
-                        if (ipPacket.HasPayloadData)
-                        {
-                            payload = System.Text.Encoding.ASCII.GetString(ipPacket.PayloadData);
-                        }
-                        string srcMac = "";
-                        string dstMac = "";
-                        string type = "";
-
-                        if (ethernetPacket != null)
-                        {
-                            srcMac = ethernetPacket.SourceHardwareAddress.ToString();
-                            dstMac = ethernetPacket.DestinationHardwareAddress.ToString();
-                            type = ethernetPacket.Type.ToString();
-                            if (type.StartsWith("IP"))
-                            {
-                                type = null;
-                            }
-                        }
                         packets.Add(new Models.Packet
                         {
                             Id = id,
@@ -59,7 +62,7 @@ namespace SimpleSniffBackend.Controllers.Services
                             Source = ipPacket.SourceAddress.ToString(),
                             Destination = ipPacket.DestinationAddress.ToString(),
                             Protocol = ipPacket.Protocol.ToString(),
-                            Length = ipPacket.TotalPacketLength,
+                            Length = raw.Data.Length,
                             Summary = ipPacket.PayloadPacket.ToString(),
                             Details = new PacketDetails
                             {
@@ -85,11 +88,11 @@ namespace SimpleSniffBackend.Controllers.Services
                         id++;
                     }
                 }
-                
+
                 device.Close();
             }
 
-            
+
 
             return packets;
         }

@@ -59,7 +59,7 @@ namespace SimpleSniffBackend.Controllers.Services
                                 EthernetType.IPv6 => "IPv6",
                                 EthernetType.Arp => "ARP",
                                 _ => ethernetPacket.Type.ToString()
-                            }
+                            };
                         }
                         else
                         {

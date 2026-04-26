@@ -95,36 +95,6 @@ namespace SimpleSniffBackend.Controllers.Services
                         });
                         id++;
                     }
-
-                    if (arpPacket != null)
-                    {
-                        string srcMac = ethernetPacket.SourceHardwareAddress.ToString();
-                        string dstMac = ethernetPacket.DestinationHardwareAddress.ToString();
-                        string type = ethernetPacket.Type.ToString();
-                        packets.Add(new Models.Packet
-                        {
-                            Id = id,
-                            Time = raw.Timeval.Date.ToString("HH:mm:ss.fff"),
-                            Source = srcMac,
-                            Destination = dstMac,
-                            Protocol = "Ethernet",
-                            Length = raw.Data.Length,
-                            Summary = type,
-                            Details = new PacketDetails
-                            {
-                                Payload = null,
-                                Ethernet = new EthernetDetails
-                                {
-                                    Source = srcMac,
-                                    Destination = dstMac,
-                                    Type = type
-                                },
-                                IP = null,
-                                Transport = null
-                            }
-                        });
-                        id++;
-                    }
                 }
 
                 device.Close();

@@ -39,20 +39,9 @@ namespace SimpleSniffBackend.Controllers.Services
                         dstMac = ethernetPacket.DestinationHardwareAddress.ToString();
                         type = ethernetPacket.Type.ToString();
                     }
-                    string payload = "";
-                    /*
-                    if (packet.PayloadPacket != null)
-                    {
-                        try
-                        {
-                            payload = System.Text.Encoding.UTF8.GetString(packet.PayloadData);
-                        }
-                        catch
-                        {
-                            payload = BitConverter.ToString(packet.PayloadData);
-                        }
-                    }
-                    */
+
+                    string payload = BitConverter.ToString(raw.Data).Replace("-", " "); ;
+
                     if (ipPacket != null)
                     {
                         packets.Add(new Models.Packet
@@ -83,32 +72,6 @@ namespace SimpleSniffBackend.Controllers.Services
                                     SrcPort = tcpPacket?.SourcePort ?? udpPacket?.SourcePort ?? 0,
                                     DstPort = tcpPacket?.DestinationPort ?? udpPacket?.DestinationPort ?? 0
                                 }
-                            }
-                        });
-                        id++;
-                    }
-                    if(ethernetPacket != null)
-                    {
-                        packets.Add(new Models.Packet
-                        {
-                            Id = id,
-                            Time = raw.Timeval.Date.ToString("HH:mm:ss.fff"),
-                            Source = srcMac,
-                            Destination = dstMac,
-                            Protocol = "Ethernet",
-                            Length = raw.Data.Length,
-                            Summary = ethernetPacket.ToString(),
-                            Details = new PacketDetails
-                            {
-                                Payload = payload,
-                                Ethernet = new EthernetDetails
-                                {
-                                    Source = srcMac,
-                                    Destination = dstMac,
-                                    Type = type
-                                },
-                                IP = null,
-                                Transport = null
                             }
                         });
                         id++;

@@ -31,19 +31,19 @@ namespace SimpleSniffBackend.Controllers.Services
                     var udpPacket = packet.Extract<UdpPacket>();
                     var arpPacket = packet.Extract<ArpPacket>();
 
-                    if (ipPacket != null /*|| ethernetPacket != null || arpPacket != null*/)
+                    if (ipPacket != null)
                     {
                         string payload = null;
                         if (ipPacket.HasPayloadData)
                         {
-                            //try
-                            //{
+                            try
+                            {
                                 payload = System.Text.Encoding.UTF8.GetString(ipPacket.PayloadData);
-                            //}
-                            //catch
-                            //{
+                            }
+                            catch
+                            {
                                 //payload = BitConverter.ToString(ipPacket.PayloadData);
-                            //}
+                            }
                         }
                         string srcMac = "";
                         string dstMac = "";
@@ -59,7 +59,7 @@ namespace SimpleSniffBackend.Controllers.Services
                         {
                             srcMac = "N/A";
                             dstMac = "N/A";
-                            type = "NA";//"Non-Ethernet " + raw.LinkLayerType.ToString();
+                            type = "Non-Ethernet " + raw.LinkLayerType.ToString();
                         }
                         packets.Add(new Models.Packet
                         {

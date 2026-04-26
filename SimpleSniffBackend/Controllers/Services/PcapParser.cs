@@ -78,8 +78,16 @@ namespace SimpleSniffBackend.Controllers.Services
                         id++;
                     }
                 }
+
                 if (arpPacket != null)
                 {
+                    string summary = arpPacket.Operation switch
+                    {
+                        ArpOperation.Request => "ARP Request",
+                        ArpOperation.Response => "ARP Reply",
+                        _ => "ARP Packet"
+                    };
+
                     packets.Add(new Models.Packet
                     {
                         Id = id,
@@ -88,17 +96,25 @@ namespace SimpleSniffBackend.Controllers.Services
                         Destination = arpPacket.TargetProtocolAddress.ToString(),
                         Protocol = "ARP",
                         Length = raw.Data.Length,
-                        Summary = arpPacket.ToString(),
+                        Summary = summary,
                         Details = new PacketDetails
                         {
                             Payload = BitConverter.ToString(raw.Data).Replace("-", " "),
                             Ethernet = new EthernetDetails
                             {
-                                srcMac = ethernetPacket?.SourceHardwareAddress?.ToString() ?? "N/A",
-                                dstMac = ethernetPacket?.DestinationHardwareAddress?.ToString() ?? "N/A",
-                                type = ethernetPacket?.Type.ToString() ?? raw.LinkLayerType.ToString()
+                                srcMac = arpPacket.SenderHardwareAddress.ToString(),
+                                dstMac = arpPacket.TargetHardwareAddress.ToString(),
+                                type = "ARP"
                             },
-                            IP = null,
+                            IP = new IPDetails
+                            {
+                                version = "ARP",
+                                srcIp = arpPacket.SenderProtocolAddress.ToString(),
+                                dstIp = arpPacket.TargetProtocolAddress.ToString(),
+                                ttl = 0,
+                                protocol = "ARP"
+                            },
+
                             Transport = null
                         }
                     });

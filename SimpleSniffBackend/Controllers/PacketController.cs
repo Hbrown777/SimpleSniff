@@ -56,11 +56,7 @@ namespace SimpleSniffBackend.Controllers
 
                 if (!string.IsNullOrEmpty(filters?.Protocol) && filters.Protocol != "all")
                 {
-                    if (filters.Protocol == "Icmp")
-                    {
-                        packets = packets.Where(p => p.Details.Transport.SrcPort == 8 || p.Details.Transport.DstPort == 8).ToList();
-                    }
-                    else if (filters.Protocol == "Http")
+                    if (filters.Protocol == "Http")
                     {
                         packets = packets.Where(p => p.Details.Transport.SrcPort == 80 || p.Details.Transport.DstPort == 80).ToList();
                     }

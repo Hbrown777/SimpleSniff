@@ -38,15 +38,15 @@ namespace SimpleSniffBackend.Controllers.Services
                         string type = ethernetPacket.Type.ToString();
                     }
                     string payload = null;
-                    if (raw.HasPayloadData)
+                    if (packet.PayloadPacket != null)
                     {
                         try
                         {
-                            payload = System.Text.Encoding.UTF8.GetString(raw.PayloadData);
+                            payload = System.Text.Encoding.UTF8.GetString(packet.PayloadData);
                         }
                         catch
                         {
-                            payload = BitConverter.ToString(raw.PayloadData);
+                            payload = BitConverter.ToString(packet.PayloadData);
                         }
                     }
                     if (ipPacket != null)

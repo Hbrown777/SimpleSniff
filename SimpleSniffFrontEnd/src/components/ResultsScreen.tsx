@@ -18,8 +18,8 @@ export interface Packet {
   summary: string;
   details: {
     ethernet: {
-      srcMac: string;
-      dstMac: string;
+      source: string;
+      destination: string;
       type: string;
     };
     ip: {

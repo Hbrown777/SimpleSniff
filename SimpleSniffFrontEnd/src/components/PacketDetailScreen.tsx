@@ -23,6 +23,14 @@ export function PacketDetailScreen({ packet, onBack }: PacketDetailScreenProps) 
     }));
   };
 
+  const formatPayload = (payload: string) => {
+  try {
+    return JSON.stringify(JSON.parse(payload), null, 2);
+  } catch {
+    return payload;
+  }
+};
+
   return (
     <div className="min-h-screen bg-slate-50">
       {/* Header */}
@@ -217,7 +225,7 @@ export function PacketDetailScreen({ packet, onBack }: PacketDetailScreenProps) 
             {expandedSections.payload && (
               <div className="px-6 py-4">
                 <div className="bg-slate-50 rounded p-4 font-mono text-sm text-slate-700 overflow-x-auto">
-                  {packet.details?.payload ?? "No payload available"}
+                  {formatPayload(packet.details.payload) ?? "No payload available"}
                 </div>
               </div>
             )}

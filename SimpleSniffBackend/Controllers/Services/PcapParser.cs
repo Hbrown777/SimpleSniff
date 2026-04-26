@@ -87,6 +87,32 @@ namespace SimpleSniffBackend.Controllers.Services
                         });
                         id++;
                     }
+                    if(ethernetPacket != null)
+                    {
+                        packets.Add(new Models.Packet
+                        {
+                            Id = id,
+                            Time = raw.Timeval.Date.ToString("HH:mm:ss.fff"),
+                            Source = srcMac,
+                            Destination = dstMac,
+                            Protocol = "Ethernet",
+                            Length = raw.Data.Length,
+                            Summary = ethernetPacket.ToString(),
+                            Details = new PacketDetails
+                            {
+                                Payload = payload,
+                                Ethernet = new EthernetDetails
+                                {
+                                    Source = srcMac,
+                                    Destination = dstMac,
+                                    Type = type
+                                },
+                                IP = null,
+                                Transport = null
+                            }
+                        });
+                        id++;
+                    }
                 }
 
                 device.Close();

@@ -108,15 +108,15 @@ export function PacketDetailScreen({ packet, onBack }: PacketDetailScreenProps) 
               <div className="px-6 py-4 space-y-3">
                 <DetailRow
                   label="Source MAC Address"
-                  value={packet.details?.ethernet?.srcMac ?? "N/A"}
+                  value={packet.details.ethernet.source}
                 />
                 <DetailRow
                   label="Destination MAC Address"
-                  value={packet.details?.ethernet?.dstMac ?? "N/A"}
+                  value={packet.details?.ethernet?.destination}
                 />
                 <DetailRow
                   label="Type"
-                  value={packet.details?.ethernet?.type ?? "N/A"}
+                  value={packet.details?.ethernet?.type}
                 />
               </div>
             )}

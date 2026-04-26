@@ -31,7 +31,7 @@ namespace SimpleSniffBackend.Controllers.Services
                     var udpPacket = packet.Extract<UdpPacket>();
                     var arpPacket = packet.Extract<ArpPacket>();
 
-                    if (ipPacket != null || ethernetPacket != null || arpPacket != null)
+                    if (ipPacket != null || ethernetPacket != null /*|| arpPacket != null*/)
                     {
                         string payload = null;
                         if (ipPacket.HasPayloadData)

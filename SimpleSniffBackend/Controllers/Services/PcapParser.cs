@@ -53,13 +53,7 @@ namespace SimpleSniffBackend.Controllers.Services
                         {
                             srcMac = ethernetPacket.SourceHardwareAddress.ToString();
                             dstMac = ethernetPacket.DestinationHardwareAddress.ToString();
-                            type = ethernetPacket.Type switch
-                            {
-                                EthernetType.IPv4 => "IPv4",
-                                EthernetType.IPv6 => "IPv6",
-                                EthernetType.Arp => "ARP",
-                                _ => ethernetPacket.Type.ToString()
-                            };
+                            type = ethernetPacket.Type.ToString();
                         }
                         else
                         {

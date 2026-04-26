@@ -30,6 +30,7 @@ namespace SimpleSniffBackend.Controllers.Services
                     var tcpPacket = packet.Extract<TcpPacket>();
                     var udpPacket = packet.Extract<UdpPacket>();
                     var arpPacket = packet.Extract<ArpPacket>();
+                    var icmpPacket = packet.Extract<IcmpPacket>();
 
                     string srcMac = "", dstMac = "", type = "";
 
@@ -76,6 +77,33 @@ namespace SimpleSniffBackend.Controllers.Services
                         });
                         id++;
                     }
+                }
+                if (arpPacket != null)
+                {
+                    packets.Add(new Models.Packet
+                    {
+                        Id = id,
+                        Time = raw.Timeval.Date.ToString("HH:mm:ss.fff"),
+                        Source = arpPacket.SenderProtocolAddress.ToString(),
+                        Destination = arpPacket.TargetProtocolAddress.ToString(),
+                        Protocol = "ARP",
+                        Length = raw.Data.Length,
+                        Summary = arpPacket.ToString(),
+                        Details = new PacketDetails
+                        {
+                            Payload = BitConverter.ToString(raw.Data).Replace("-", " "),
+                            Ethernet = new EthernetDetails
+                            {
+                                srcMac = ethernetPacket?.SourceHardwareAddress?.ToString() ?? "N/A",
+                                dstMac = ethernetPacket?.DestinationHardwareAddress?.ToString() ?? "N/A",
+                                type = ethernetPacket?.Type.ToString() ?? raw.LinkLayerType.ToString()
+                            },
+                            IP = null,
+                            Transport = null
+                        }
+                    });
+
+                    id++;
                 }
 
                 device.Close();

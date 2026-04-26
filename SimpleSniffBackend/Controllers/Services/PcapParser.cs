@@ -42,7 +42,7 @@ namespace SimpleSniffBackend.Controllers.Services
                             }
                             catch
                             {
-                                //payload = BitConverter.ToString(ipPacket.PayloadData);
+                                payload = BitConverter.ToString(ipPacket.PayloadData);
                             }
                         }
                         string srcMac = "";
@@ -89,6 +89,64 @@ namespace SimpleSniffBackend.Controllers.Services
                                     SrcPort = tcpPacket?.SourcePort ?? udpPacket?.SourcePort ?? 0,
                                     DstPort = tcpPacket?.DestinationPort ?? udpPacket?.DestinationPort ?? 0
                                 }
+                            }
+                        });
+                        id++;
+                    }
+                    if(ethernetPacket != null)
+                    {
+                        string srcMac = ethernetPacket.SourceHardwareAddress.ToString();
+                        string dstMac = ethernetPacket.DestinationHardwareAddress.ToString();
+                        string type = ethernetPacket.Type.ToString();
+                        packets.Add(new Models.Packet
+                        {
+                            Id = id,
+                            Time = raw.Timeval.Date.ToString("HH:mm:ss.fff"),
+                            Source = srcMac,
+                            Destination = dstMac,
+                            Protocol = "Ethernet",
+                            Length = raw.Data.Length,
+                            Summary = type,
+                            Details = new PacketDetails
+                            {
+                                Payload = null,
+                                Ethernet = new EthernetDetails
+                                {
+                                    Source = srcMac,
+                                    Destination = dstMac,
+                                    Type = type
+                                },
+                                IP = null,
+                                Transport = null
+                            }
+                        });
+                        id++;
+                    }
+                    if (arpPacket != null)
+                    {
+                        string srcMac = ethernetPacket.SourceHardwareAddress.ToString();
+                        string dstMac = ethernetPacket.DestinationHardwareAddress.ToString();
+                        string type = ethernetPacket.Type.ToString();
+                        packets.Add(new Models.Packet
+                        {
+                            Id = id,
+                            Time = raw.Timeval.Date.ToString("HH:mm:ss.fff"),
+                            Source = srcMac,
+                            Destination = dstMac,
+                            Protocol = "Ethernet",
+                            Length = raw.Data.Length,
+                            Summary = type,
+                            Details = new PacketDetails
+                            {
+                                Payload = null,
+                                Ethernet = new EthernetDetails
+                                {
+                                    Source = srcMac,
+                                    Destination = dstMac,
+                                    Type = type
+                                },
+                                IP = null,
+                                Transport = null
                             }
                         });
                         id++;

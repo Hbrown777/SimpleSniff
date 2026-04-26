@@ -39,7 +39,8 @@ namespace SimpleSniffBackend.Controllers.Services
                         dstMac = ethernetPacket.DestinationHardwareAddress.ToString();
                         type = ethernetPacket.Type.ToString();
                     }
-                    string payload = null;
+                    string payload = "";
+                    /*
                     if (packet.PayloadPacket != null)
                     {
                         try
@@ -51,6 +52,7 @@ namespace SimpleSniffBackend.Controllers.Services
                             payload = BitConverter.ToString(packet.PayloadData);
                         }
                     }
+                    */
                     if (ipPacket != null)
                     {
                         packets.Add(new Models.Packet

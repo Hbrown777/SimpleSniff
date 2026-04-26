@@ -53,15 +53,15 @@ namespace SimpleSniffBackend.Controllers.Services
                     {
                         if(srcMac == null)
                         {
-                            srcMac = "N/A";
+                            string srcMac = "N/A";
                         }
                         if(dstMac == null)
                         {
-                            dstMac = "N/A";
+                            string dstMac = "N/A";
                         }
                         if(type == null)
                         {
-                            type = "N/A";
+                            string type = "N/A";
                         }
                         packets.Add(new Models.Packet
                         {

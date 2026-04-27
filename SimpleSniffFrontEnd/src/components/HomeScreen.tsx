@@ -36,7 +36,7 @@ export function HomeScreen({ onFileSelect }: HomeScreenProps) {
           </p>
         </div>
 
-        <a href="/test.pcapng" download>
+        <a href="/test.pcapng" download className="flex items-center justify-center p-8">
           <Button>Download Sample File</Button>
         </a>
 

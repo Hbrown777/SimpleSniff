@@ -36,6 +36,10 @@ export function HomeScreen({ onFileSelect }: HomeScreenProps) {
           </p>
         </div>
 
+        <a href="/test.pcapng" download>
+          <Button>Download Sample File</Button>
+        </a>
+
         {/* Upload Area */}
         <div
           onDrop={handleDrop}

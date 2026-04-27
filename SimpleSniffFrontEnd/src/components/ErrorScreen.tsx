@@ -27,7 +27,7 @@ export function ErrorScreen({ onTryAgain }: ErrorScreenProps) {
             </p>
           </div>
 
-          {/* Action Buttons */}
+          {/* Back Button */}
           <div className="flex flex-col gap-3">
             <Button size="lg" onClick={onTryAgain} className="w-full">
               Try Again

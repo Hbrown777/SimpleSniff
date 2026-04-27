@@ -46,7 +46,7 @@ const handleAnalyze = async (filters: FilterOptions) => {
 
         const res = await fetch("https://simplesniff.onrender.com/api/Packet/analyze", {
             method: "POST",
-            body: formData,   // ← no Content-Type header, let browser set it
+            body: formData,
         });
         const data = await res.json();
         setPackets(data.packets);

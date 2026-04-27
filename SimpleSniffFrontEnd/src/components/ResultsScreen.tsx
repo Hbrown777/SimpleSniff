@@ -69,7 +69,7 @@ export function ResultsScreen({
         </div>
       </div>
 
-      {/* Results Content */}
+      {/* Results */}
       <div className="p-8">
         <div className="bg-white rounded-lg border border-slate-200 overflow-hidden">
           {/* Results Header */}
